@@ -1,12 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2012/5/14 16:42:01                           */
+/* Created on:     2012/5/15 9:07:11                            */
 /*==============================================================*/
 
-
-drop table if exists CWGL_GX_XFCYZ_USER;
-
-drop table if exists CWGL_GX_XFXXZB_XFCYZ;
 
 drop table if exists CWGL_GX_XFXXZB_XFXL;
 
@@ -21,26 +17,6 @@ drop table if exists CWGL_XFDL;
 drop table if exists CWGL_XFXL;
 
 drop table if exists CWGL_XFXX_ZB;
-
-/*==============================================================*/
-/* Table: CWGL_GX_XFCYZ_USER                                    */
-/*==============================================================*/
-create table CWGL_GX_XFCYZ_USER
-(
-   USERID               varchar(32) not null,
-   UKEY                 varchar(32) not null,
-   primary key (USERID, UKEY)
-);
-
-/*==============================================================*/
-/* Table: CWGL_GX_XFXXZB_XFCYZ                                  */
-/*==============================================================*/
-create table CWGL_GX_XFXXZB_XFCYZ
-(
-   XFLSH                char(12) not null,
-   UKEY                 varchar(32) not null,
-   primary key (XFLSH, UKEY)
-);
 
 /*==============================================================*/
 /* Table: CWGL_GX_XFXXZB_XFXL                                   */
@@ -109,6 +85,8 @@ create table CWGL_XFCYZ
    FIELD3               char(10),
    FIELD4               char(10),
    UKEY                 varchar(32) not null,
+   XFLSH                char(12) not null,
+   USERID               varchar(32) not null,
    primary key (UKEY)
 );
 
@@ -162,18 +140,6 @@ create table CWGL_XFXX_ZB
    primary key (XFLSH)
 );
 
-alter table CWGL_GX_XFCYZ_USER add constraint FK_CWGL_GX_XFCYZ_USER foreign key (USERID)
-      references CWGL_USER (USERID) on delete restrict on update restrict;
-
-alter table CWGL_GX_XFCYZ_USER add constraint FK_CWGL_GX_XFCYZ_USER2 foreign key ()
-      references CWGL_XFCYZ (UKEY) on delete restrict on update restrict;
-
-alter table CWGL_GX_XFXXZB_XFCYZ add constraint FK_CWGL_GX_XFXXZB_XFCYZ foreign key (XFLSH)
-      references CWGL_XFXX_ZB (XFLSH) on delete restrict on update restrict;
-
-alter table CWGL_GX_XFXXZB_XFCYZ add constraint FK_CWGL_GX_XFXXZB_XFCYZ2 foreign key ()
-      references CWGL_XFCYZ (UKEY) on delete restrict on update restrict;
-
 alter table CWGL_GX_XFXXZB_XFXL add constraint FK_CWGL_GX_XFXXZB_XFXL foreign key (XLID)
       references CWGL_XFXL (XLID) on delete restrict on update restrict;
 
@@ -185,6 +151,12 @@ alter table CWGL_LOGIN add constraint FK_CWGL_GX_LOGIN_USER foreign key (USERID)
 
 alter table CWGL_USER add constraint FK_CWGL_GX_LOGIN_USER2 foreign key (USERNAME)
       references CWGL_LOGIN (USERNAME) on delete restrict on update restrict;
+
+alter table CWGL_XFCYZ add constraint FK_CWGL_GX_XFCYZ_USER foreign key (USERID)
+      references CWGL_USER (USERID) on delete restrict on update restrict;
+
+alter table CWGL_XFCYZ add constraint FK_CWGL_GX_XFXXZB_XFCYZ foreign key (XFLSH)
+      references CWGL_XFXX_ZB (XFLSH) on delete restrict on update restrict;
 
 alter table CWGL_XFXL add constraint FK_CWGL_GX_XFDL_XFXL foreign key (DLID)
       references CWGL_XFDL (DLID) on delete restrict on update restrict;
